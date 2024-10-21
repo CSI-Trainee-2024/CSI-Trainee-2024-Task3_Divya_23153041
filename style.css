@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+
+#intro {
+    position: fixed;
+    background: url(assets/bg.jpg) no-repeat center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+}
+
+h1 {
+    color: white;
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.rules {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+h2 {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.rule {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin-right: 15px;
+}
+
+.controls img {
+    height: 30px;
+    margin: 0 5px;
+}
+
+.pokemon {
+    height: 40px !important;
+}
+
+.rule p {
+    color: white;
+    font-size: 16px;
+    flex: 1;
+}
+
+.highlight {
+    background: rgba(255, 255, 255, 0.4);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+#play {
+    padding: 15px 40px;
+    font-size: 24px;
+    background-color: gold;
+    color: black;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#play:hover {
+    background-color: yellow;
+}
+
+#container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+}
+
+canvas {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: #6AC1FF;
+    cursor: default;
+}
+
+canvas:hover {
+    cursor: pointer;
+}
+
+#enemy-poke, #ash, #pokeball, #map, #pika {
+    display: none;
+}
