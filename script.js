@@ -9,21 +9,19 @@ window.addEventListener('load', function() {
         startGame();
         introscreen.style.display = 'none';
     });
-
     function startGame() {
-    const canvas = document.getElementById('GameCanvas');
-    const ctx = canvas.getContext('2d');
-    const width = canvas.width = window.innerWidth;
-    const height = canvas.height = window.innerHeight;
+    const canvas=document.getElementById('GameCanvas');
+    const ctx=canvas.getContext('2d');
+    const width=canvas.width=window.innerWidth;
+    const height=canvas.height=window.innerHeight;
 
-    let gameover = false;
-    let score = 0;
-    let space = true;
+    let gameover=false;
+    let score=0;
+    let space=true;
     
-
     class Input {
         constructor() {
-            this.keys = [];
+            this.keys=[];
             window.addEventListener('keydown', (e) => {
                 if ((e.key === 'w' || e.key === 'a' || e.key === 's' || e.key === 'd' || e.key === ' ') 
                     && this.keys.indexOf(e.key) === -1) {
@@ -37,30 +35,27 @@ window.addEventListener('load', function() {
             });
         }
     }
-
     class Player {
         constructor(Gamewidth, Gameheight) {
-            this.Gamewidth = Gamewidth;
-            this.Gameheight = Gameheight;
-            this.width = 210;
-            this.height = 200;
-            this.x = 100;  
-            this.y = this.Gameheight - this.height - 110;
-            this.player = document.getElementById('ash');
-            this.frames = [0, 1.2, 2.6, 3.6, 4.6, 5.8, 7.1, 8.1];
-            this.index = 0;
-            this.frameY = 0;
-            this.timer = 0;
-            this.interval = 1000/15; 
-            
-            this.vy = 0;
-            this.gravity = 1;
-            this.speed = 0;
-            this.onright = false;
+            this.Gamewidth=Gamewidth;
+            this.Gameheight=Gameheight;
+            this.width=210;
+            this.height=200;
+            this.x=100;  
+            this.y=this.Gameheight-this.height-110;
+            this.player=document.getElementById('ash');
+            this.frames=[0, 1.2, 2.6, 3.6, 4.6, 5.8, 7.1, 8.1];
+            this.index=0;
+            this.frameY=0;
+            this.timer=0;
+            this.interval=1000/15; 
+            this.vy=0;
+            this.gravity=1;
+            this.speed=0;
+            this.onright=false;
         }
-
         draw(context) {
-            const frameX = this.frames[this.index] * this.width;
+            const frameX=this.frames[this.index]*this.width;
             context.drawImage(
                 this.player, 
                 frameX, 
@@ -73,83 +68,70 @@ window.addEventListener('load', function() {
                 this.height
             );
         }
-
         update(input, time, background) {
-            this.onright = false;
-
-            if (input.keys.indexOf('d') > -1) {
+            this.onright=false;
+            if (input.keys.indexOf('d')>-1) {
                 this.onright = true;
-                this.frameY = 0;
-                
-                
-                if (this.x >= 100) {
-                    background.speed = -12;
-                    this.speed = 0;
+                this.frameY=0;
+                if (this.x>=100) {
+                    background.speed=-12;
+                    this.speed=0;
                 } 
                 else {
-                    background.speed = 0;
-                    this.speed = 10;
+                    background.speed=0;
+                    this.speed=10;
                 }
             } 
-            else if (input.keys.indexOf('a') > -1) {
-                this.speed = -5;
-                background.speed = 0;
+            else if (input.keys.indexOf('a')>-1) {
+                this.speed=-5;
+                background.speed=0;
             } 
             else {
-                this.speed = 0;
-                background.speed = 0;
+                this.speed=0;
+                background.speed=0;
             }
-            
-            if (input.keys.indexOf('w') > -1 && this.onGround()) {
-                this.vy -= 30;
+            if (input.keys.indexOf('w')>-1 && this.onGround()) {
+                this.vy-=30;
             }
-            
-            this.x += this.speed;
-            this.y += this.vy;
-
-            if (this.x < 0) this.x = 0;
-
+            this.x+=this.speed;
+            this.y+=this.vy;
+            if (this.x<0) this.x=0;
             if (!this.onGround()) {
-                this.vy += this.gravity;
+                this.vy+=this.gravity;
             } else {
-                this.vy = 0;
+                this.vy=0;
             }
-            if (this.y > this.Gameheight - this.height) {
-                this.y = this.Gameheight - this.height;
+            if (this.y>this.Gameheight-this.height) {
+                this.y=this.Gameheight-this.height;
             }
-
-            if (this.timer > this.interval) {
-                this.timer = 0;
+            if (this.timer>this.interval) {
+                this.timer=0;
                 if (this.onright || this.speed !== 0) {
-                    this.index = (this.index + 1) % this.frames.length;
+                    this.index = (this.index+1) % this.frames.length;
                 }
                 else {
-                    this.index = 0;
+                    this.index=0;
                 }
             } 
             else {
-                this.timer += time;
+                this.timer +=time;
             }
         }
-
         onGround() {
-            return this.y >= this.Gameheight - this.height - 110;
+            return this.y>=this.Gameheight-this.height-110;
         }
     }
-
     class PokeBall {
         constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.radius = 20;
-            this.speed = 10;
-            this.ball = document.getElementById('pokeball');
+            this.x=x;
+            this.y=y;
+            this.radius=20;
+            this.speed=10;
+            this.ball=document.getElementById('pokeball');
         }
-
         draw(context) {
             context.drawImage(this.ball, this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2);
         }
-
         update(background) {
             this.x += this.speed - background.speed;
         }
@@ -157,112 +139,106 @@ window.addEventListener('load', function() {
 
     class Background {
         constructor(Gamewidth, Gameheight) {
-            this.Gamewidth = Gamewidth;
-            this.Gameheight = Gameheight;
-            this.width = 1700;
-            this.height = 990;
-            this.x = 0;
-            this.y = 0;
-            this.image = document.getElementById('map');
-            this.speed = 0;
+            this.Gamewidth=Gamewidth;
+            this.Gameheight=Gameheight;
+            this.width=1700;
+            this.height=990;
+            this.x=0;
+            this.y=0;
+            this.image=document.getElementById('map');
+            this.speed=0;
         }
-        
         draw(context) {
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
         }
-        
+    
         update() {
-            this.x += this.speed;
-            if (this.x <= -this.width) {
-                this.x = 0;
+            this.x+=this.speed;
+            if (this.x<=-this.width) {
+                this.x=0;
             }
         }
     }
-
     class Pokemon {
         constructor(Gamewidth, Gameheight, Enemy = false) {
-            this.Gamewidth = Gamewidth;
-            this.Gameheight = Gameheight;
-            this.width = 170;
-            this.height = 150;
-            this.x = this.Gamewidth + 100; 
-            this.y = this.Gameheight - this.height - 132;
+            this.Gamewidth=Gamewidth;
+            this.Gameheight=Gameheight;
+            this.width=170;
+            this.height=150;
+            this.x = this.Gamewidth+100; 
+            this.y = this.Gameheight-this.height-132;
             this.image = document.getElementById(Enemy ? 'enemy-poke' : 'pika');
             this.Enemy = Enemy;
             this.remove = false;
         }
-    
         draw(context) {
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
         }
-    
         update(background) {
-            this.x += background.speed;
+            this.x+=background.speed;
             
-            if (this.x < -this.width) {
-                this.remove = true;
+            if (this.x<-this.width) {
+                this.remove=true;
             }
         }
     }
 
     function Pcollision(player, pokemon) {
-        return player.x < pokemon.x + pokemon.width &&
-               player.x + player.width > pokemon.x &&
-               player.y < pokemon.y + pokemon.height &&
-               player.y + player.height > pokemon.y;
+        return player.x<pokemon.x+pokemon.width &&
+               player.x+player.width>pokemon.x &&
+               player.y<pokemon.y+pokemon.height &&
+               player.y+player.height>pokemon.y;
     }
 
     function BCollision(pokeBall, pokemon) {
-        return pokeBall.x < pokemon.x + pokemon.width &&
-               pokeBall.x + pokeBall.radius * 2 > pokemon.x &&
-               pokeBall.y < pokemon.y + pokemon.height &&
-               pokeBall.y + pokeBall.radius * 2 > pokemon.y;
+        return pokeBall.x<pokemon.x+pokemon.width &&
+               pokeBall.x+pokeBall.radius*2>pokemon.x &&
+               pokeBall.y<pokemon.y+pokemon.height &&
+               pokeBall.y+pokeBall.radius*2>pokemon.y;
     }
 
     const input = new Input();
     const player = new Player(canvas.width, canvas.height);
     const background = new Background(canvas.width, canvas.height);
-    let pokemons = [];
-    const pokeBalls = [];
+    let pokemons=[];
+    const pokeBalls=[];
 
-    let lastTime = 0;
-    let spawn = 0;
-    let interval = 2000;
+    let lastTime=0;
+    let spawn=0;
+    let interval=2000;
 
     function spawnpokemon() {
         let Enemy = Math.random() < 0.4;
         const pokemon = new Pokemon(canvas.width, canvas.height, Enemy);
         pokemons.push(pokemon);
     }
-    
-
     function totalScore(context) {
-        context.fillStyle = 'white';
-        context.font = '27px poppins';
+        context.fillStyle='white';
+        context.font='27px poppins';
         context.fillText(`Pokémons caught: ${score}`, 10, 30);
     }
 
     function gameOver(context) {
-        context.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        context.fillStyle='rgba(0, 0, 0, 0.5)';
         context.fillRect(0, 0, canvas.width, canvas.height);
-        context.fillStyle = 'white';
-        context.font = '59px poppins';
-        context.textAlign = 'center';
+        context.fillStyle ='white';
+        context.font ='59px poppins';
+        context.textAlign ='center';
         context.fillText(`Game Over! Pokémons caught: ${score}`, canvas.width/2, canvas.height/2);
 
         const reset = document.createElement('button');
-        reset.textContent = 'Reset';
-        reset.style.fontSize = '20px';
-        reset.style.backgroundColor = 'gold';
-        reset.style.border = 'none';
-        reset.style.borderRadius = '25px';
-        reset.style.position = 'absolute';
-        reset.style.top = '55%';
-        reset.style.left = '50%';
+        reset.textContent ='Reset';
+        reset.style.fontSize='20px';
+        reset.style.backgroundColor='gold';
+        reset.style.border='none';
+        reset.style.borderRadius ='25px';
+        reset.style.position ='absolute';
+        reset.style.top ='55%';
+        reset.style.left ='50%';
         reset.style.transform = 'translate(-50%, -50%)';
-        reset.style.padding = '10px 20px';
-        reset.style.cursor = 'pointer';
+        reset.style.padding ='10px 20px';
+        reset.style.cursor ='pointer';
         reset.addEventListener('mouseover', () => {
             reset.style.backgroundColor = 'yellow';
         });
@@ -277,10 +253,10 @@ window.addEventListener('load', function() {
     }
 
     function animation(timestamp) {
-        const time = timestamp - lastTime;
-        lastTime = timestamp;
+        const time =timestamp-lastTime;
+        lastTime=timestamp;
         
-        ctx.clearRect(0, 0, width, height);
+        ctx.clearRect(0,0, width, height);
         
         background.draw(ctx);
         background.update();
@@ -297,11 +273,11 @@ window.addEventListener('load', function() {
             }, 500);
         }
 
-        spawn = spawn + time;
-        if (spawn > interval) {
+        spawn =spawn+time;
+        if (spawn>interval) {
             spawnpokemon();
-            spawn = 0;
-            interval = Math.random() * (2000-1000) + 1000; 
+            spawn=0;
+            interval=Math.random() * (2000-1000) + 1000; 
         }
 
         pokemons.forEach((pokemon) => {
